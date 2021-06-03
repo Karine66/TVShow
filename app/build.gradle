@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+   id 'realm-android'
+
 }
 
 android {
@@ -13,8 +15,8 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -33,6 +35,9 @@ android {
     buildFeatures {
         viewBinding true
     }
+    realm {
+        syncEnabled = true
+    }
 }
 
 dependencies {
@@ -49,6 +54,9 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     kapt 'com.github.bumptech.glide:compiler:4.12.0'
+
+//    kapt "io.realm:realm-annotations:10.5.0"
+//    kapt "io.realm:realm-annotations-processor:10.4.0"
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

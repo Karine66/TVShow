@@ -3,7 +3,6 @@ package com.karine.tvshow.ui.mostpopular
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.ListAdapter
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,27 +10,20 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.karine.tvshow.R
+import com.karine.tvshow.Listener
 import com.karine.tvshow.databinding.FragmentMostPopularBinding
+import com.karine.tvshow.models.Movies
 import com.karine.tvshow.models.ResultsItem
 import com.karine.tvshow.utils.GlideApp
 import org.json.JSONException
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MostPopularFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class MostPopularFragment : Fragment() {
+class MostPopularFragment : Fragment(), Listener {
     private var _fragmentMostPopularBinding: FragmentMostPopularBinding? = null
     private val fragmentMostPopularBinding get() = _fragmentMostPopularBinding!!
     private lateinit var requestQueue: RequestQueue
     private var resultMovies = mutableListOf<ResultsItem>()
+    private var favoritesList = mutableListOf<Movies>()
     private lateinit var adapter: com.karine.tvshow.ui.ListAdapter
 
     override fun onCreateView(
@@ -55,7 +47,7 @@ class MostPopularFragment : Fragment() {
         setHasOptionsMenu(true);
         return view
     }
-
+    // for search bar
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
@@ -104,7 +96,12 @@ class MostPopularFragment : Fragment() {
                         val showImage = "https://image.tmdb.org/t/p/w500$imageUrl"
                         Log.d("showImage", showImage)
                         resultMovies.add(ResultsItem(date, overview, name, showImage))
-                        adapter = com.karine.tvshow.ui.ListAdapter(resultMovies, GlideApp.with(this))
+                        adapter = com.karine.tvshow.ui.ListAdapter(
+                            resultMovies,
+                            favoritesList,
+                            GlideApp.with(this),
+                            this
+                        )
                         fragmentMostPopularBinding.rvMostPopular.adapter = adapter
                     }
 
@@ -138,7 +135,12 @@ class MostPopularFragment : Fragment() {
                         val showImage = "https://image.tmdb.org/t/p/w500$imageUrl"
                         Log.d("showImage", showImage)
                         resultMovies.add(ResultsItem(date, overview, name, showImage))
-                        val adapter = com.karine.tvshow.ui.ListAdapter(resultMovies, GlideApp.with(this))
+                        val adapter = com.karine.tvshow.ui.ListAdapter(
+                            resultMovies,
+                            favoritesList,
+                            GlideApp.with(this),
+                            this
+                        )
                         fragmentMostPopularBinding.rvMostPopular.adapter = adapter
                     }
 
@@ -149,4 +151,9 @@ class MostPopularFragment : Fragment() {
         requestQueue.add(request)
     }
 
+    //for click on favorites
+    override fun clickFavorites(position: Int) {
+
+        Log.d("clickFavorites", "clickFavorites$position")
+    }
 }

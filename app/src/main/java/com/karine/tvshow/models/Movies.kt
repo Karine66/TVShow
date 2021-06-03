@@ -1,23 +1,18 @@
 package com.karine.tvshow.models
 
-//@RealmClass
-//open class Movies() : RealmObject() {
-//
-//    var title: String = ""
+import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
+
+@RealmClass
+open class Movies() : RealmObject() {
+
+    @PrimaryKey var id = 0
+    var title: String = ""
 //    var overview: String = ""
 //    var date: String = ""
 //    var like: MutableList<String> = mutableListOf()
 //    var photo: String = ""
-//
-//    constructor(
-//        title : String,
-//        overview:String,
-//        date:String,
-//        like:MutableList< String >, photo: String):this(){
-//        this.title = title
-//        this.overview = overview
-//        this.date = date
-//        this.like = like
-//        this.photo = photo
-//    }
-//}
+
+
+}
